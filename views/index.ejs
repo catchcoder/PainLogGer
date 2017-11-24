@@ -8,7 +8,7 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-      <link rel="icon" href="/images/favicon.png">
+      <link rel="icon" href="/favicon.ico">
   </head>
   <body>
 
@@ -76,8 +76,8 @@
       <table class="table table-hover">
           <thead>
           <tr>
-              <th>when</th>
-              <th>Salt Level</th>
+              <th>Pain Level</th>
+              <th>Activity</th>
           </tr>
           </thead>
           <tbody>
@@ -107,7 +107,7 @@
   $(document).ready(function(){
       $('#dropdown').on('change', function() {
           $('#fsalt').val(this.value)
-          //alert( this.value ); // or $(this).val()
+          alert( this.value ); // or $(this).val()
       });
        });
 
@@ -119,13 +119,25 @@
       alert(msg + " " +fsalt);
      // $.post("actions.php",{'action':action,'editor':editor});
       //var term = $form.find( "input[name='s']" ).val();
-       var  url = "/logip?level=" +fsalt + "&type=" + msg;
-
+       var  url = "/logpain?level=" +fsalt + "&type=" + msg;
+        alert(url );
       // Send the data using post
       //var posting = $.get( url, { s: fsalt } );
-      var form = $('<form method="post" action="' + url + '">' +
-              '<input type="hidden" name="id" value="' + url + '"></form>');
+      //var form = $('<form method="post" action="' + url + '">' +
+      //        '<input type="hidden" name="id" value="' + url + '"></form>');
+      //alert (form);
+
+      // error with submit changed from above to this
+      // ref https://stackoverflow.com/questions/1200266/submit-a-form-using-jquery
+      // #bug1001
+      var form = document.createElement("form");
+      $(form).attr("action", url)
+          .attr("method", "post");
+      $(form).html('<input type="hidden" name="id" value="' + url + '" />');
+      document.body.appendChild(form);
       $(form).submit();
+      document.body.removeChild(form);
+      //$(form).submit();
   });
   </script>
   </body>

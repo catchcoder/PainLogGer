@@ -57,7 +57,8 @@ router.get('/', function(req, res, next) {
             if (isNaN(fslevel)){fslevel=0}
             console.log("ps " + fslevel)
             percent =  ((100 / 6 ) * fslevel)
-            if (fslevel=> 2){
+            if (fslevel=>2)
+            {
                 pbmax = parseFloat(fslevel) + parseFloat(2);
             }
            // ;console.log("ps " + percent )
@@ -89,7 +90,7 @@ router.get('/displayAdding', function(req,res,next){
     res.render('displayAdding', { title: 'Pain LogGer', logtype: logtype });
 });
 
-router.get('/logpain', function(req,res,next){
+router.post('/logpain', function(req,res,next){
    //var ip = req.query.ip;
     //var mac = .query.mac;
     var logsalt = 0;
@@ -112,7 +113,7 @@ router.get('/logpain', function(req,res,next){
 
         console.log("Logged");
         db.close();
-        onsole.log("db closed");
+        console.log("db closed");
         res.render('displayAdding', { title: 'Pain LogGer', logtype: logtype });
         console.log("Logged scrap");
 
