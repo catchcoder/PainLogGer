@@ -45,7 +45,7 @@
               <select id="dropdown" style="max-width:90%;">
                   <option value="">Select Activity</option>
                  <% for (i=0;i<menuitem.length;i++){%>
-              <option value="<%= menuitem[i].saltlevel %>"><%=menuitem[i].fname%> (<%= menuitem[i].saltlevel %>)</option>
+              <option value="<%= menuitem[i].activity %>"><%=menuitem[i].activity%></option>
           <% } %>
               </select>
           <% } %>
@@ -54,13 +54,13 @@
 
     </div>
     <div class="row" align="center">
-        </select><input type="text" id="fsalt" placeholder="0" value="0">
+        </select><input type="text" id="fsalt" placeholder="0" value="d">
     </div>
 
 </div>
 <hr>
-      <div class="row"align="center">
-        <button type="button" class="btn btn-info btn-block">0 No Pain</button><br>
+      <div class="row"align="center">No Pain
+        <button type="button" class="btn btn-info btn-block">0</button><br>
         <button type="button"  class="btn btn-info btn-block">1 </button><br>
         <button type="button"  class="btn btn-primary btn-block">2</button><br>
         <button type="button" class="btn btn-primary btn-block">3</button><br>
@@ -70,33 +70,34 @@
           <button type="button"  class="btn btn-warning btn-block">7</button><br>
           <button type="button" class="btn btn-danger btn-block">8</button><br>
           <button type="button" class="btn btn-danger btn-block">9</button><br>
-          <button type="button" class="btn btn-danger btn-block">10 Extreme Pain</button><br>
+          Extreme pain
+          <button type="button" class="btn btn-danger btn-block">10</button><br>
     </div>
       <% if (listfortoday.length >0) {%>
       <table class="table table-hover">
           <thead>
           <tr>
-              <th>Pain Level</th>
               <th>Activity</th>
+              <th>Pain Level</th>
           </tr>
           </thead>
           <tbody>
           <% for (i=0;i<listfortoday.length;i++){%>
           <tr>
               <td><%= listfortoday[i].whenlogged %></td>
-              <td><%=listfortoday[i].saltlogged%></td>
+              <td><%=listfortoday[i].painlogged%></td>
           </tr>
           <%  }%>
           </tbody>
       </table>
       <% } %>
 <% if (saltyesterday <3){%>
-      <div class="alert alert-success" role="alert">Yesterdays Salt Level <%=saltyesterday%> Grams</div>
+      <div class="alert alert-success" role="alert">Yesterdays Level <%=saltyesterday%> Grams</div>
       <% } else if (saltyesterday>3 && saltyesterday<4) { %>
 
-      <div class="alert alert-warning" role="alert">Yesterdays Salt Level <%=saltyesterday%> Grams</div>
+      <div class="alert alert-warning" role="alert">Yesterdays Level <%=saltyesterday%> Grams</div>
       <% }  else { %>
-      <div class="alert alert-danger" role="alert">Yesterdays Salt Level <%=saltyesterday%> Grams</div>
+      <div class="alert alert-danger" role="alert">Yesterdays Level <%=saltyesterday%> Grams</div>
       <%} %>
 
       <% include partials/template/footer.ejs %>
@@ -107,19 +108,20 @@
   $(document).ready(function(){
       $('#dropdown').on('change', function() {
           $('#fsalt').val(this.value)
-          alert( this.value ); // or $(this).val()
+          //alert( this.value ); // or $(this).val()
       });
        });
 
   $(":button").click(function () {
 
-      var msg = $(this).text();
-      var fsalt = $('#fsalt').val()
-      if (fsalt == null ){fsalt =0}
-      alert(msg + " " +fsalt);
-     // $.post("actions.php",{'action':action,'editor':editor});
+      var activity = $('#fsalt').val();
+      var painlevel =  $(this).text();
+      alert (painlevel);
+     // if (fsalt == null ){fsalt ="unknown"}
+      //alert(msg + " " +fsalt);
+     // $.post("actions.php",{'action': action,'editor':editor});
       //var term = $form.find( "input[name='s']" ).val();
-       var  url = "/logpain?level=" +fsalt + "&type=" + msg;
+       var  url = "/logpain?painlevel=" +painlevel + "&activity=" + activity;
         alert(url );
       // Send the data using post
       //var posting = $.get( url, { s: fsalt } );

@@ -17,15 +17,15 @@ router.get('/', function(req, res, next) {
 
     db.serialize(function() {
 
-        db.each("SELECT * FROM log where logdate = date() order by logtype asc;", function (err, row) {
-            listfortoday.push({whenlogged: row.logtype, saltlogged: row.loglevel});         // posts.push({floglevel: row[1].loglevel})
+        db.each("SELECT * FROM log where logdate = date() order by logactivity asc;", function (err, row) {
+            listfortoday.push({whenlogged: row.logactivity, painlogged: row.logpainlevel});         // posts.push({floglevel: row[1].loglevel})
            // console.log(row);
         });
     });
 
     db.serialize(function() {
 
-        db.each("SELECT sum(loglevel) FROM log where logdate = date('now', '-1 day');", function (err, row) {
+        db.each("SELECT sum(logpainlevel) FROM log where logdate = date('now', '-1 day');", function (err, row) {
            // listfortoday.push({whenlogged: row.logtype, saltlogged: row.loglevel});         // posts.push({floglevel: row[1].loglevel})
             console.log(row);
             fslevelyday =  JSON.stringify(row);         // posts.push({floglevel: row[1].loglevel})
@@ -45,7 +45,7 @@ router.get('/', function(req, res, next) {
 
     //var dbb = new sqlite3.Database('recordsalt.sqlite3');
     db.serialize(function() {
-        db.each("SELECT sum(loglevel) FROM log where logdate= date();", function(err, row)
+        db.each("SELECT sum(logpainlevel) FROM log where logdate= date();", function(err, row)
         {  //res.json (row);
            // console.log(JSON.stringify(row));
             fslevel =  JSON.stringify(row);         // posts.push({floglevel: row[1].loglevel})
@@ -69,13 +69,13 @@ router.get('/', function(req, res, next) {
         }),
 
   db.serialize(function() {
-    db.each("SELECT * FROM item order by fname asc;", function(err, row)
-        { posts.push({fname: row.fname, saltlevel: row.saltlevel});         // posts.push({floglevel: row[1].loglevel})
+    db.each("SELECT * FROM item order by activity asc;", function(err, row)
+        { posts.push({activity: row.activity, painlevel: row.painlevel});         // posts.push({floglevel: row[1].loglevel})
           // console.log(row);
 
 
         }, function(callback) {
-        res.render('index', {title: 'Pain LogGer', menuitem: posts, fslevel: fslevel, percent: percent, pbmax: pbmax, listfortoday: listfortoday, saltyesterday: fslevelyday});
+        res.render('index', {title: 'Pain Logger', menuitem: posts, fslevel: fslevel, percent: percent, pbmax: pbmax, listfortoday: listfortoday, saltyesterday: fslevelyday});
     });
     });
   //}); // db.serialise
@@ -86,27 +86,27 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/displayAdding', function(req,res,next){
-    var logtype = 2;
-    res.render('displayAdding', { title: 'Pain LogGer', logtype: logtype });
+    var logactivity = 2;
+    res.render('displayAdding', { title: 'Pain Logger', logactivity: logactivity });
 });
 
 router.post('/logpain', function(req,res,next){
    //var ip = req.query.ip;
     //var mac = .query.mac;
-    var logsalt = 0;
-    var logtype = "error";
-    logsalt = req.query.level;
-    logtype = req.query.type;
+    var logpainlevel = 0;
+    var logactivity = "error";
+    logpainlevel = req.query.painlevel;
+    logactivity = req.query.activity;
     console.log("hh");
-    if (logsalt >= 0) {
+    if (logpainlevel != "") {
         console.log("II");
         console.log("Logging");
         var sqlite3 = require('sqlite3').verbose();
         var db = new sqlite3.Database('painlogger.sqlite3');
         db.serialize(function () {
-            //  console.log ("INSERT INTO test values (date(),0.1,'Snack');")
+           //   console.log ("INSERT INTO test values (date(),0.1,'Snack');")
 
-            db.run("INSERT INTO log (id,logdate,loglevel,logtype) values ( null,date()," + logsalt + ",'" + logtype + "');");
+            db.run("INSERT INTO log (id,logdate,logpainlevel,logactivity) values ( null,date()," + logpainlevel + ",'" + logactivity + "');");
 
 
         });
@@ -114,12 +114,12 @@ router.post('/logpain', function(req,res,next){
         console.log("Logged");
         db.close();
         console.log("db closed");
-        res.render('displayAdding', { title: 'Pain LogGer', logtype: logtype });
-        console.log("Logged scrap");
+        res.render('displayAdding', { title: 'Pain Logger', logactivity: logactivity });
+        console.log("Logged");
 
     }else {
         console.log("Nothin to Log to DB /logpan" );
-            res.render('displayAdding', { title: 'Salt for today'});
+            res.render('displayAdding', { title: 'Pain Logger - recording data'});
     }
 
     //res.render('index', { title: 'Data Logged',
