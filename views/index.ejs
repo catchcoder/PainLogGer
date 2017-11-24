@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta charset="UTF-8">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <link rel="icon" href="/images/favicon.png">
+  </head>
+  <body>
+
+  <div class="container">
+    <div class="jumbotron text-center" ><h3><%= title %></h3><span><%= fslevel %> grams <%= parseFloat(percent).toFixed(2) %>%</span></div>
+    <div class="progress progress-striped">
+        <%  if (fslevel < 3){ %>
+
+        <div class="progress-bar progress-bar-success active" role="progressbar" aria-valuenow="<%= fslevel %>" aria-valuemin="0" aria-valuemax="6" style="width:  <%= parseFloat(percent).toFixed(2) %>%;" >
+
+        </div>
+        <% } else if (fslevel>3 && fslevel < 4){  %>
+        <div class="progress-bar progress-bar-warning active" role="progressbar" aria-valuenow="<%= fslevel %>" aria-valuemin="0" aria-valuemax="6" style="width:  <%= parseFloat(percent).toFixed(2) %>%;" >
+
+        </div>
+        <%} else { %>
+        <div class="progress-bar progress-bar-danger active" role="progressbar" aria-valuenow="<%= fslevel %>" aria-valuemin="0" aria-valuemax="<%= parseInt(fslevel) + parseInt(3) %>" style="width:  <%= parseFloat(percent).toFixed(2) %>%;" >
+
+            </div>
+        <%}%>
+
+
+        <!--
+        40% Complete (success)green 50% Complete (info) blue 60% Complete (warning) yellow 70% Complete (danger) red
+        -->
+    </div>
+
+      <div class="row" align="center">
+          <div class="dropdown">
+
+
+
+      <% if (menuitem.length >0) {%>
+              <select id="dropdown" style="max-width:90%;">
+                  <option value="">Select food or drink</option>
+                 <% for (i=0;i<menuitem.length;i++){%>
+              <option value="<%= menuitem[i].saltlevel %>"><%=menuitem[i].fname%> (<%= menuitem[i].saltlevel %>)</option>
+          <% } %>
+              </select>
+          <% } %>
+
+
+
+    </div>
+    <div class="row" align="center">
+        </select><input type="text" id="fsalt" placeholder="0" value="0">
+    </div>
+
+</div>
+<hr>
+      <div class="row"align="center">
+        <button type="button" class="btn btn-primary btn-block">Hot / Cold Drink</button><br>
+        <button type="button"  class="btn btn-info btn-block">Snack</button><br>
+        <button type="button"  class="btn btn-warning btn-block">Breakfast</button><br>
+        <button type="button" class="btn btn-danger btn-block">Lunch</button><br>
+        <button type="button" class="btn btn-success btn-block">Teatime / Dinner</button><br>
+    </div>
+      <% if (listfortoday.length >0) {%>
+      <table class="table table-hover">
+          <thead>
+          <tr>
+              <th>when</th>
+              <th>Salt Level</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% for (i=0;i<listfortoday.length;i++){%>
+          <tr>
+              <td><%= listfortoday[i].whenlogged %></td>
+              <td><%=listfortoday[i].saltlogged%></td>
+          </tr>
+          <%  }%>
+          </tbody>
+      </table>
+      <% } %>
+<% if (saltyesterday <3){%>
+      <div class="alert alert-success" role="alert">Yesterdays Salt Level <%=saltyesterday%> Grams</div>
+      <% } else if (saltyesterday>3 && saltyesterday<4) { %>
+
+      <div class="alert alert-warning" role="alert">Yesterdays Salt Level <%=saltyesterday%> Grams</div>
+      <% }  else { %>
+      <div class="alert alert-danger" role="alert">Yesterdays Salt Level <%=saltyesterday%> Grams</div>
+      <%} %>
+
+      <% include partials/template/footer.ejs %>
+
+
+    </div>
+  <script type="text/javascript">
+  $(document).ready(function(){
+      $('#dropdown').on('change', function() {
+          $('#fsalt').val(this.value)
+          //alert( this.value ); // or $(this).val()
+      });
+       });
+
+  $(":button").click(function () {
+
+      var msg = $(this).text();
+      var fsalt = $('#fsalt').val()
+      if (fsalt == null ){fsalt =0}
+     // alert(msg + " " +fsalt);
+     // $.post("actions.php",{'action':action,'editor':editor});
+      //var term = $form.find( "input[name='s']" ).val();
+       var  url = "/logip?level=" +fsalt + "&type=" + msg;
+
+      // Send the data using post
+      //var posting = $.get( url, { s: fsalt } );
+      var form = $('<form method="post" action="' + url + '">' +
+              '<input type="hidden" name="id" value="' + url + '"></form>');
+      $(form).submit();
+  });
+  </script>
+  </body>
+</html>
