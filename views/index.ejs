@@ -54,7 +54,7 @@
 
     </div>
     <div class="row" align="center">
-        </select><input type="text" id="fsalt" placeholder="0" value="d">
+        </select><input type="text" id="input_activity" placeholder="0" value="Resting">
     </div>
 
 </div>
@@ -107,24 +107,24 @@
   <script type="text/javascript">
   $(document).ready(function(){
       $('#dropdown').on('change', function() {
-          $('#fsalt').val(this.value)
+          $('#input_activity').val(this.value)
           //alert( this.value ); // or $(this).val()
       });
        });
 
   $(":button").click(function () {
 
-      var activity = $('#fsalt').val();
+      var activity = $('#input_activity').val();
       var painlevel =  $(this).text();
-      alert (painlevel);
-     // if (fsalt == null ){fsalt ="unknown"}
-      //alert(msg + " " +fsalt);
+      // alert (painlevel);
+     // if (input_activity == null ){input_activity ="unknown"}
+      //alert(msg + " " + input_activity);
      // $.post("actions.php",{'action': action,'editor':editor});
       //var term = $form.find( "input[name='s']" ).val();
        var  url = "/logpain?painlevel=" +painlevel + "&activity=" + activity;
-        alert(url );
+      //  alert(url );
       // Send the data using post
-      //var posting = $.get( url, { s: fsalt } );
+      //var posting = $.get( url, { s: input_activity } );
       //var form = $('<form method="post" action="' + url + '">' +
       //        '<input type="hidden" name="id" value="' + url + '"></form>');
       //alert (form);
