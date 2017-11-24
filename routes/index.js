@@ -5,7 +5,7 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
   var sqlite3 = require('sqlite3').verbose();
-  var db = new sqlite3.Database('recordsalt.sqlite3');
+  var db = new sqlite3.Database('painlogger.sqlite3');
 
   var posts = [];
   var fslevel = [];
@@ -74,7 +74,7 @@ router.get('/', function(req, res, next) {
 
 
         }, function(callback) {
-        res.render('index', {title: 'Salt for today', menuitem: posts, fslevel: fslevel, percent: percent, pbmax: pbmax, listfortoday: listfortoday, saltyesterday: fslevelyday});
+        res.render('index', {title: 'Pain LogGer', menuitem: posts, fslevel: fslevel, percent: percent, pbmax: pbmax, listfortoday: listfortoday, saltyesterday: fslevelyday});
     });
     });
   //}); // db.serialise
@@ -84,22 +84,24 @@ router.get('/', function(req, res, next) {
 });
 });
 
-router.get('/ip', function(req,res,next){
+router.get('/displayAdding', function(req,res,next){
     var logtype = 2;
-    res.render('scrap', { title: 'Salt for today', logtype: logtype });
+    res.render('displayAdding', { title: 'Pain LogGer', logtype: logtype });
 });
 
-router.post('/logip', function(req,res,next){
+router.get('/logpain', function(req,res,next){
    //var ip = req.query.ip;
     //var mac = .query.mac;
-    var logsalt = 0
-    var logtype = "error"
+    var logsalt = 0;
+    var logtype = "error";
     logsalt = req.query.level;
     logtype = req.query.type;
+    console.log("hh");
     if (logsalt >= 0) {
+        console.log("II");
         console.log("Logging");
         var sqlite3 = require('sqlite3').verbose();
-        var db = new sqlite3.Database('recordsalt.sqlite3');
+        var db = new sqlite3.Database('painlogger.sqlite3');
         db.serialize(function () {
             //  console.log ("INSERT INTO test values (date(),0.1,'Snack');")
 
@@ -110,12 +112,13 @@ router.post('/logip', function(req,res,next){
 
         console.log("Logged");
         db.close();
-        res.render('scrap', { title: 'Salt for today', logtype: logtype });
+        onsole.log("db closed");
+        res.render('displayAdding', { title: 'Pain LogGer', logtype: logtype });
         console.log("Logged scrap");
 
     }else {
-        console.log("No Log" );
-            res.render('scrap', { title: 'Salt for today'});
+        console.log("Nothin to Log to DB /logpan" );
+            res.render('displayAdding', { title: 'Salt for today'});
     }
 
     //res.render('index', { title: 'Data Logged',

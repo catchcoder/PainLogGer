@@ -43,7 +43,7 @@
 
       <% if (menuitem.length >0) {%>
               <select id="dropdown" style="max-width:90%;">
-                  <option value="">Select food or drink</option>
+                  <option value="">Select Activity</option>
                  <% for (i=0;i<menuitem.length;i++){%>
               <option value="<%= menuitem[i].saltlevel %>"><%=menuitem[i].fname%> (<%= menuitem[i].saltlevel %>)</option>
           <% } %>
@@ -60,11 +60,17 @@
 </div>
 <hr>
       <div class="row"align="center">
-        <button type="button" class="btn btn-primary btn-block">Hot / Cold Drink</button><br>
-        <button type="button"  class="btn btn-info btn-block">Snack</button><br>
-        <button type="button"  class="btn btn-warning btn-block">Breakfast</button><br>
-        <button type="button" class="btn btn-danger btn-block">Lunch</button><br>
-        <button type="button" class="btn btn-success btn-block">Teatime / Dinner</button><br>
+        <button type="button" class="btn btn-info btn-block">0 No Pain</button><br>
+        <button type="button"  class="btn btn-info btn-block">1 </button><br>
+        <button type="button"  class="btn btn-primary btn-block">2</button><br>
+        <button type="button" class="btn btn-primary btn-block">3</button><br>
+        <button type="button" class="btn btn-success btn-block">4</button><br>
+          <button type="button" class="btn btn-success btn-block">5</button><br>
+          <button type="button"  class="btn btn-warning btn-block">6</button><br>
+          <button type="button"  class="btn btn-warning btn-block">7</button><br>
+          <button type="button" class="btn btn-danger btn-block">8</button><br>
+          <button type="button" class="btn btn-danger btn-block">9</button><br>
+          <button type="button" class="btn btn-danger btn-block">10 Extreme Pain</button><br>
     </div>
       <% if (listfortoday.length >0) {%>
       <table class="table table-hover">
@@ -110,7 +116,7 @@
       var msg = $(this).text();
       var fsalt = $('#fsalt').val()
       if (fsalt == null ){fsalt =0}
-     // alert(msg + " " +fsalt);
+      alert(msg + " " +fsalt);
      // $.post("actions.php",{'action':action,'editor':editor});
       //var term = $form.find( "input[name='s']" ).val();
        var  url = "/logip?level=" +fsalt + "&type=" + msg;
