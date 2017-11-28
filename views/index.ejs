@@ -13,7 +13,12 @@
   <body>
 
   <div class="container">
-    <div class="jumbotron text-center" ><h3><%= title %></h3><span><%= fslevel %> grams <%= parseFloat(percent).toFixed(2) %>%</span></div>
+    <div class="jumbotron text-center" ><h3><%= title %></h3>
+        <!--<span><%= fslevel %> grams <%= parseFloat(percent).toFixed(2) %>%</span>
+        -->
+        </div>
+   <!--
+
     <div class="progress progress-striped">
         <%  if (fslevel < 3){ %>
 
@@ -34,13 +39,12 @@
         <!--
         40% Complete (success)green 50% Complete (info) blue 60% Complete (warning) yellow 70% Complete (danger) red
         -->
+      <!--
     </div>
+  -->
 
       <div class="row" align="center">
           <div class="dropdown">
-
-
-
       <% if (menuitem.length >0) {%>
               <select id="dropdown" style="max-width:90%;">
                   <option value="">Select Activity</option>
@@ -50,11 +54,12 @@
               </select>
           <% } %>
 
-
+              </select>
+              <input type="text" id="input_activity" placeholder="0" value="Resting" size="35">
 
     </div>
     <div class="row" align="center">
-        </select><input type="text" id="input_activity" placeholder="0" value="Resting">
+
     </div>
 
 </div>
