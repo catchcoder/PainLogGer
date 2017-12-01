@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
   var posts = [];
   var fslevel = [];
-    var fslevelyday = [];
+    var dbPainLevelYesterday = [];
  var percent =0;
     var pbmax = 9;
     listfortoday = [];
@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 
     db.serialize(function() {
 
-        db.each("SELECT * FROM log where logdate = date() order by logactivity asc;", function (err, row) {
+        db.each("SELECT * FROM log where logdate = date() order by logdatetime asc;", function (err, row) {
             listfortoday.push({whenlogged: row.logactivity, painlogged: row.logpainlevel});         // posts.push({floglevel: row[1].loglevel})
            // console.log(row);
         });
@@ -27,15 +27,15 @@ router.get('/', function(req, res, next) {
 
         db.each("SELECT sum(logpainlevel) FROM log where logdate = date('now', '-1 day');", function (err, row) {
            // listfortoday.push({whenlogged: row.logtype, saltlogged: row.loglevel});         // posts.push({floglevel: row[1].loglevel})
-            console.log(row);
-            fslevelyday =  JSON.stringify(row);         // posts.push({floglevel: row[1].loglevel})
+           // console.log(row);
+            dbPainLevelYesterday =  JSON.stringify(row);         // posts.push({floglevel: row[1].loglevel})
 
             // console.log(JSON.stringify(row));
             //fslevel.replace('(','');
-            var resi = fslevelyday.split(":");
-            fslevelyday = parseFloat(resi[1].replace("}","")).toFixed(2);
-            if (isNaN(fslevelyday)){fslevelyday=0}
-            console.log("psy  " + fslevelyday)
+            var resi = dbPainLevelYesterday.split(":");
+            dbPainLevelYesterday = parseFloat(resi[1].replace("}","")).toFixed(2);
+            if (isNaN(dbPainLevelYesterday)){dbPainLevelYesterday=0}
+            //console.log("psy  " + dbPainLevelYesterday)
             // percent =  ((100 / 6 ) * fslevel)
             // if (fslevel=> 2){
             //     pbmax = parseFloat(fslevel) + parseFloat(2);
@@ -55,9 +55,9 @@ router.get('/', function(req, res, next) {
             var resi = fslevel.split(":");
            fslevel = parseFloat(resi[1].replace("}","")).toFixed(2);
             if (isNaN(fslevel)){fslevel=0}
-            console.log("ps " + fslevel)
-            percent =  ((100 / 6 ) * fslevel)
-            if (fslevel=>2)
+            //console.log("ps " + fslevel)
+           // percent =  ((100 / 6 ) * fslevel)
+            if (fslevel>=2)
             {
                 pbmax = parseFloat(fslevel) + parseFloat(2);
             }
@@ -71,11 +71,11 @@ router.get('/', function(req, res, next) {
   db.serialize(function() {
     db.each("SELECT * FROM item order by activity asc;", function(err, row)
         { posts.push({activity: row.activity, painlevel: row.painlevel});         // posts.push({floglevel: row[1].loglevel})
-          // console.log(row);
+           //console.log(row);
 
 
         }, function(callback) {
-        res.render('index', {title: 'Pain Logger', menuitem: posts, fslevel: fslevel, percent: percent, pbmax: pbmax, listfortoday: listfortoday, saltyesterday: fslevelyday});
+        res.render('index', {title: 'Pain Logger', menuitem: posts, fslevel: fslevel, pbmax: pbmax, listfortoday: listfortoday, painLevelYesterday: dbPainLevelYesterday});
     });
     });
   //}); // db.serialise
@@ -97,10 +97,10 @@ router.post('/logpain', function(req,res,next){
     var logactivity = "error";
     logpainlevel = req.query.painlevel;
     logactivity = req.query.activity;
-    console.log("hh");
+    //console.log("hh");
     if (logpainlevel != "") {
-        console.log("II");
-        console.log("Logging");
+        //console.log("II");
+        //console.log("Logging");
         var sqlite3 = require('sqlite3').verbose();
         var db = new sqlite3.Database('painlogger.sqlite3');
         db.serialize(function () {
@@ -111,14 +111,14 @@ router.post('/logpain', function(req,res,next){
 
         });
 
-        console.log("Logged");
+        //console.log("Logged");
         db.close();
-        console.log("db closed");
+        //console.log("db closed");
         res.render('displayAdding', { title: 'Pain Logger', logactivity: logactivity });
-        console.log("Logged");
+        //console.log("Logged");
 
     }else {
-        console.log("Nothin to Log to DB /logpan" );
+        //console.log("Nothin to Log to DB /logpan" );
             res.render('displayAdding', { title: 'Pain Logger - recording data'});
     }
 
