@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   var sqlite3 = require('sqlite3').verbose();
   var db = new sqlite3.Database('reacordsalt.sqlite3');
 

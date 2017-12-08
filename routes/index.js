@@ -3,14 +3,14 @@ var router = express.Router();
 
 /* GET home page. */
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   var sqlite3 = require('sqlite3').verbose();
   var db = new sqlite3.Database('painlogger.sqlite3');
 
   var posts = [];
   var fslevel = [];
     var dbPainLevelYesterday = [];
- var percent =0;
+ //var percent =0;
     var pbmax = 9;
     listfortoday = [];
 
@@ -66,7 +66,7 @@ router.get('/', function(req, res, next) {
             //console.log(areas)
 
 
-        }),
+        });
 
   db.serialize(function() {
     db.each("SELECT * FROM item order by activity asc;", function(err, row)
