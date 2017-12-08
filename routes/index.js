@@ -85,12 +85,12 @@ router.get('/', function(req, res) {
 });
 });
 
-router.get('/displayAdding', function(req,res,next){
+router.get('/displayAdding', function(req,res){
     var logactivity = 2;
     res.render('displayAdding', { title: 'Pain Logger', logactivity: logactivity });
 });
 
-router.post('/logpain', function(req,res,next){
+router.post('/logpain', function(req,res){
    //var ip = req.query.ip;
     //var mac = .query.mac;
     var logpainlevel = 0;
@@ -99,12 +99,11 @@ router.post('/logpain', function(req,res,next){
     logactivity = req.query.activity;
     //console.log("hh");
     if (logpainlevel != "") {
-        //console.log("II");
-        //console.log("Logging");
+
         var sqlite3 = require('sqlite3').verbose();
         var db = new sqlite3.Database('painlogger.sqlite3');
         db.serialize(function () {
-           //   console.log ("INSERT INTO test values (date(),0.1,'Snack');")
+
 
             db.run("INSERT INTO log (id,logdate,logpainlevel,logactivity) values ( null,date()," + logpainlevel + ",'" + logactivity + "');");
 

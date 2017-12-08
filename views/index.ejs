@@ -20,18 +20,18 @@
       <div class="row" align="left">
           <div class="dropdown">
       <% if (menuitem.length >0) {%>
-              <select id="dropdown" style="max-width:90%;">
+              <select title="Options" id="dropdown" style="max-width:90%;">
                   <option value="">Select Activity</option>
                  <% for (i=0;i<menuitem.length;i++){%>
-              <option value="<%= menuitem[i].activity %>"><%=menuitem[i].activity%></option>
+              <option label="<%= menuitem[i].activity %>" value="<%= menuitem[i].activity %>"><%=menuitem[i].activity%></option>
           <% } %>
               </select>
           <% } %>
 
-              </select>
-              <input type="text" id="input_activity" placeholder="0" value="Resting" size="35">
 
-    </div>
+              <input type="text" id="input_activity" placeholder="Resting" value="Resting" size="35">
+
+        </div>
     <div class="row" align="center">
 
     </div>
@@ -44,17 +44,17 @@
                   <tr><td colspan="5" align="left">Low Pain</td>
                   <td colspan="6" align="right">High Pain</td></tr>
                   <tr>
-                    <td size="10%"><button type="button" class="btn btn-info btn-block">0</button></td>
-                      <td size="10%"><button type="button"  class="btn btn-info btn-block">1 </button></td>
-                      <td size="10%"><button type="button"  class="btn btn-primary btn-block">2</button></td>
-                      <td size="10%"><button type="button" class="btn btn-primary btn-block">3</button></td>
-                      <td size="10%"><button type="button" class="btn btn-success btn-block">4</button></td>
-                      <td size="10%"><button type="button" class="btn btn-success btn-block">5</button></td>
-                      <td size="10%"><button type="button"  class="btn btn-warning btn-block">6</button></td>
-                      <td size="10%"><button type="button"  class="btn btn-warning btn-block">7</button></td>
-                      <td size="10%"><button type="button" class="btn btn-danger btn-block">8</button></td>
-                      <td size="10%"><button type="button" class="btn btn-danger btn-block">9</button></td>
-                      <td size="10%"><button type="button" class="btn btn-danger btn-block">10</button></td>
+                    <td width="9%"><button type="button" class="btn btn-info btn-block">0</button></td>
+                      <td width="9%"><button type="button"  class="btn btn-info btn-block">1 </button></td>
+                      <td width="9%"><button type="button"  class="btn btn-primary btn-block">2</button></td>
+                      <td width="9%"><button type="button" class="btn btn-primary btn-block">3</button></td>
+                      <td width="9%"><button type="button" class="btn btn-success btn-block">4</button></td>
+                      <td width="9%"><button type="button" class="btn btn-success btn-block">5</button></td>
+                      <td width="9%"><button type="button"  class="btn btn-warning btn-block">6</button></td>
+                      <td width="9%"><button type="button"  class="btn btn-warning btn-block">7</button></td>
+                      <td width="9%"><button type="button" class="btn btn-danger btn-block">8</button></td>
+                      <td width="9%"><button type="button" class="btn btn-danger btn-block">9</button></td>
+                      <td width="9%"><button type="button" class="btn btn-danger btn-block">10</button></td>
                   </tr>
 
           </table>
