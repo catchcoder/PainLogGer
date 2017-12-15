@@ -19,7 +19,7 @@ router.get('/', function(req, res) {
 
         db.each("SELECT * FROM log where logdate = date() order by logdatetime asc;", function (err, row) {
             listfortoday.push({whenlogged: row.logactivity, painlogged: row.logpainlevel});         // posts.push({floglevel: row[1].loglevel})
-           // console.log(row);
+            //console.log(process.env.DB_HOST);
         });
     });
 

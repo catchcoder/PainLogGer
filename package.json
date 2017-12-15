@@ -10,6 +10,7 @@
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
+    "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-generator": "^4.15.5",
@@ -20,6 +21,6 @@
     "sqlite3": "^3.1.13"
   },
   "devDependencies": {
-    "nodemon": "^1.13.0"
+    "nodemon": "^1.13.1"
   }
 }
